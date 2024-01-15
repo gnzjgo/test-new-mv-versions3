@@ -17,10 +17,18 @@ wait_until_utc_time() {
     time_difference=$((target_epoch_time - current_epoch_time))
     echo "time diff $time_difference"
 
+    while [ $time_difference -gt 60 ]; do
+        sleep 60
+        current_epoch_time=$(date -u +"%s")
+        time_difference=$((target_epoch_time - current_epoch_time))
+        echo "time diff $time_difference"
+    done
+    
     while [ $time_difference -gt 0 ]; do
         sleep 1
         current_epoch_time=$(date -u +"%s")
         time_difference=$((target_epoch_time - current_epoch_time))
+        echo "time diff $time_difference"
     done
 }
 
