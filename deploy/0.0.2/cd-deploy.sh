@@ -34,13 +34,14 @@ wait_until_utc_time() {
 
 tb --semver ${VERSION} deploy --v3
 tb --semver ${VERSION} pipe rm mat_safe_populate --yes
+tb --semver ${VERSION} datasurce truncate location_count_mv --yes
 
 
 # Wait until set time has passed
-target_utc_time="2024-01-15 19:20:00"
+target_utc_time="2024-01-15 19:30:00"
 echo "Waiting until $target_utc_time UTC..."
 wait_until_utc_time "$target_utc_time"
 
 echo "Time has reached $target_utc_time UTC! Continue with the rest of the script."
 
-tb push pipes/mat_safe_populate.pipe --populate --wait
+tb --semver ${VERSION} push pipes/mat_safe_populate.pipe --populate --wait
