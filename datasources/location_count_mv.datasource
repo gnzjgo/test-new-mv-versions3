@@ -1,0 +1,8 @@
+# Data Source created from Pipe 'mat_no_populate'
+
+SCHEMA >
+    `location` String,
+    `hits` AggregateFunction(count)
+
+ENGINE "AggregatingMergeTree"
+ENGINE_SORTING_KEY "location"
