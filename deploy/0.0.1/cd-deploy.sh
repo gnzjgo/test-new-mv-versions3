@@ -39,10 +39,19 @@ tb --semver ${VERSION} datasource truncate location_count_mv --yes
 
 
 # Wait until set time has passed
-target_utc_time="2024-01-16 08:32:00"
+target_utc_time="2024-01-16 08:46:00"
 echo "Waiting until $target_utc_time UTC..."
 wait_until_utc_time "$target_utc_time"
 
 echo "Time has reached $target_utc_time UTC! Continue with the rest of the script."
 
 tb --semver ${VERSION} push pipes/mat_safe_populate.pipe --populate --wait
+
+tb --semver ${VERSION} sql "select * from (SELECT location, countMerge(hits) hits
+FROM location_count_mv
+GROUP BY location) mv
+join (SELECT JSON_VALUE(payload, '$.location') location, count() hits
+FROM analytics_events
+GROUP BY location) raw
+using location
+order by hits desc"
