@@ -39,7 +39,7 @@ tb --semver ${VERSION} datasource truncate location_count_mv --yes
 
 
 # Wait until set time has passed
-target_utc_time="2024-01-16 08:25:00"
+target_utc_time="2024-01-16 08:27:00"
 echo "Waiting until $target_utc_time UTC..."
 wait_until_utc_time "$target_utc_time"
 
